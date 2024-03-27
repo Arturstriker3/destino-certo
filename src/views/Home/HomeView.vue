@@ -41,6 +41,33 @@
             </ul>
         </div>
 
+        <div class="main">
+            <div class="topbar">
+                <div class="toggle"><ion-icon name="menu-outline" @click="menuToggle" ></ion-icon></div>
+                <div class="search">
+                    <label>
+                        <input type="text" placeholder="Procurar Corrida">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </label>
+                </div>
+                <div class="user">
+                    <img src="/admIMG.jpg" alt="Admin img">
+                </div>
+            </div>
+
+            <div class="cardBox">
+                <div class="card">
+                    <div>
+                        <div class="number">1,504</div>
+                        <div class="cardName">Usuários</div>
+                    </div>
+                    <div class="iconBx">
+                        <ion-icon name="eye-outline"></ion-icon>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div>
             <slot name="slot-pages"></slot>
         </div>
@@ -54,7 +81,16 @@ export default {
         return {
             //
         }
-    }
+    },
+    methods: {
+        menuToggle() {
+            let navigation = document.querySelector('.navigation');
+            let main = document.querySelector('.main');
+
+            navigation.classList.toggle('active');
+            main.classList.toggle('active');
+        }
+    },
 }
 </script>
 

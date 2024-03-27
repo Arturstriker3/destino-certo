@@ -19,6 +19,10 @@ body {
         transition: 0.5s;
         overflow: hidden;
 
+        &.active {
+            width: 72px;
+        }
+
         ul {
             position: absolute;
             top: 0;
@@ -103,6 +107,88 @@ body {
                         text-align: start;
                         white-space: nowrap;
                     }
+                }
+            }
+        }
+    }
+
+// Conteúdo Principal
+
+    .main {
+        position: absolute;
+        width: calc(100% - 300px);
+        left: 300px;
+        min-height: 100vh;
+        background: $ColorWhite;
+        transition: 0.5s;
+
+        &.active {
+            width: calc(100% - 72px);
+            left: 72px;
+        }
+
+        .topbar {
+            width: 100%;
+            height: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 8px;
+
+            .toggle {
+                position: relative;
+                top: 0;
+                width: 56px;
+                height: 56px;
+                display: flex;
+                justify-content: center;
+                font-size: 2.5em;
+                cursor: pointer;
+            }
+
+            .search {
+                position: relative;
+                width: 400px;
+                margin: 0 8px;
+
+                label {
+                    position: relative;
+                    width: 100%;
+
+                    input {
+                        width: 100%;
+                        height: 40px;
+                        border-radius: 40px;
+                        padding: 4px 24px;
+                        padding-left: 32px;
+                        font-size: 16px;
+                        outline: none;
+                        border: 1px solid $ColorBlack;
+                    }
+
+                    ion-icon {
+                        position: absolute;
+                        top: 0;
+                        left: 8px;
+                        font-size: 1.2em;
+                    }
+                }
+            }
+
+            .user {
+                position: relative;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                overflow: hidden;
+                cursor: pointer;
+
+                img {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
                 }
             }
         }
