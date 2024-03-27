@@ -55,21 +55,11 @@
                 </div>
             </div>
 
-            <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="number">1,504</div>
-                        <div class="cardName">Usuários</div>
-                    </div>
-                    <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
+            <slot name="slot-pages"></slot>
         </div>
 
         <div>
-            <slot name="slot-pages"></slot>
+            
         </div>
     </div>
 </template>

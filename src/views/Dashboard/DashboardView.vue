@@ -1,9 +1,43 @@
 <template>
     <HomeView>
       <template v-slot:slot-pages>
-        <div>
-            <h1>Dashboard Slot</h1>
-            <p>Dashboard Slot</p>
+        <div class="cardBox">
+            <div class="card">
+                <div>
+                    <div class="number">1,504</div>
+                    <div class="cardName">Usuários</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <div class="number">80</div>
+                    <div class="cardName">Motoristas</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <div class="number">201</div>
+                    <div class="cardName">Veículos</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
+            <div class="card">
+                <div>
+                    <div class="number">25</div>
+                    <div class="cardName">Viagens</div>
+                </div>
+                <div class="iconBx">
+                    <ion-icon name="eye-outline"></ion-icon>
+                </div>
+            </div>
         </div>
       </template>
     </HomeView>
@@ -20,3 +54,5 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" src="./style.scss"></style>
