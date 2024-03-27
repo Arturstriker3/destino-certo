@@ -1,8 +1,35 @@
 
-// Color Palette
-$color1: #F257A0;
-$color2: #8130F2;
-$color3: #5852F2;
-$color4: #00CCFF;
-$colorBlack: #121212;
-$colorWhite: #FFFFFF;
+// Cores para o tema claro
+$lightThemeColor1: #F257A0;
+$lightThemeColor2: #8130F2;
+$lightThemeColor3: #5852F2;
+$lightThemeColor4: #00CCFF;
+$lightThemeColorBlack: #121212;
+$lightThemeColorWhite: #FFFFFF;
+
+// Cores para o tema escuro
+$darkThemeColor1: #A02CF2;
+$darkThemeColor2: #F23030;
+$darkThemeColor3: #52F285;
+$darkThemeColor4: #FFCC00;
+$darkThemeColorBlack: #FFFFFF;
+$darkThemeColorWhite: #121212;
+
+// Mixin
+@mixin theme($theme) {
+  @if $theme == 'light' {
+    $color1: $lightThemeColor1;
+    $color2: $lightThemeColor2;
+    $color3: $lightThemeColor3;
+    $color4: $lightThemeColor4;
+    $colorBlack: $lightThemeColorBlack;
+    $colorWhite: $lightThemeColorWhite;
+  } @else if $theme == 'dark' {
+    $color1: $darkThemeColor1;
+    $color2: $darkThemeColor2;
+    $color3: $darkThemeColor3;
+    $color4: $darkThemeColor4;
+    $colorBlack: $darkThemeColorBlack;
+    $colorWhite: $darkThemeColorWhite;
+  }
+}
