@@ -3,34 +3,42 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <router-link :to="{ name: 'Dashboard' }">
+                    <a href="#">
                         <span class="icon"><ion-icon name="car-sport-outline"></ion-icon></span>
                         <span class="title">Destino Certo</span>
+                    </a>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'Dashboard' }">
+                        <a href="#">
+                            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                            <span class="title">Dashboard</span>
+                        </a>
                     </router-link>
                 </li>
                 <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="title">Dashboard</span>
-                    </a>
+                    <router-link :to="{ name: 'Clientes' }">
+                        <a href="#">
+                            <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                            <span class="title">Clientes</span>
+                        </a>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                        <span class="title">Clientes</span>
-                    </a>
+                    <router-link :to="{ name: 'Clientes' }">
+                        <a href="#">
+                            <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                            <span class="title">Motoristas</span>
+                        </a>
+                    </router-link>
                 </li>
                 <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                        <span class="title">Motoristas</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                        <span class="title">Carros</span>
-                    </a>
+                    <router-link :to="{ name: 'Clientes' }">
+                        <a href="#">
+                            <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                            <span class="title">Carros</span>
+                        </a>
+                    </router-link>
                 </li>
                 <li>
                     <a href="#">
