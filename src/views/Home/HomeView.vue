@@ -3,42 +3,46 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="#">
+                    <router-link :to="{ name: 'Dashboard' }">
                         <span class="icon"><ion-icon name="car-sport-outline"></ion-icon></span>
-                        <span class="tittle">Brand Name</span>
-                    </a>
+                        <span class="title">Destino Certo</span>
+                    </router-link>
                 </li>
                 <li>
                     <a href="#">
                         <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
-                        <span class="tittle">Dashboard</span>
+                        <span class="title">Dashboard</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                        <span class="tittle">Customers</span>
+                        <span class="title">Clientes</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                        <span class="tittle">Message</span>
+                        <span class="title">Motoristas</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                        <span class="tittle">Help</span>
+                        <span class="title">Carros</span>
                     </a>
                 </li>
                 <li>
                     <a href="#">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-                        <span class="tittle">Sair</span>
+                        <span class="title">Sair</span>
                     </a>
                 </li>
             </ul>
+        </div>
+
+        <div>
+            <slot name="slot-pages"></slot>
         </div>
     </div>
 </template>

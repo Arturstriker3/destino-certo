@@ -7,7 +7,11 @@ const routes = [
     name: 'Home',
     component: Home
   },
-  // Adicione outras rotas aqui conforme necessário
+  {
+    path: '/Dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard/DashboardView.vue')
+  },
 ];
 
 const router = createRouter({
