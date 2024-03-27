@@ -1,0 +1,29 @@
+@import '/src/assets/main';
+
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+
+    .navigation {
+        position: fixed;
+        width: 300px;
+        height: 100%;
+
+        background: $Color1;
+        border-left: 10px solid $Color1;
+        transition: 0.5s;
+        overflow: hidden;
+
+        ul {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+        }
+    }
+}
