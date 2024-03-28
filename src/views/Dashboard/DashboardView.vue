@@ -8,7 +8,7 @@
                     <div class="cardName">Usuários</div>
                 </div>
                 <div class="iconBx">
-                    <ion-icon name="eye-outline"></ion-icon>
+                    <ion-icon name="people-outline"></ion-icon>
                 </div>
             </div>
             <div class="card">
@@ -17,7 +17,7 @@
                     <div class="cardName">Motoristas</div>
                 </div>
                 <div class="iconBx">
-                    <ion-icon name="eye-outline"></ion-icon>
+                    <ion-icon name="accessibility-outline"></ion-icon>
                 </div>
             </div>
             <div class="card">
@@ -26,7 +26,7 @@
                     <div class="cardName">Veículos</div>
                 </div>
                 <div class="iconBx">
-                    <ion-icon name="eye-outline"></ion-icon>
+                    <ion-icon name="car-outline"></ion-icon>
                 </div>
             </div>
             <div class="card">
@@ -35,7 +35,7 @@
                     <div class="cardName">Viagens</div>
                 </div>
                 <div class="iconBx">
-                    <ion-icon name="eye-outline"></ion-icon>
+                    <ion-icon name="map-outline"></ion-icon>
                 </div>
             </div>
         </div>
@@ -62,13 +62,25 @@
                             <td>AHP-6969</td>
                             <td><span class="status delivered">R$ 2500</span></td>
                         </tr>
+                        <tr>
+                            <td>Viagem 2</td>
+                            <td>Alex Brito</td>
+                            <td>AHP-6969</td>
+                            <td><span class="status delivered">R$ 2500</span></td>
+                        </tr>
+                        <tr>
+                            <td>Viagem 3</td>
+                            <td>Marcos Felipe</td>
+                            <td>AHP-6969</td>
+                            <td><span class="status delivered">R$ 2500</span></td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
 
             <div class="recentCustomers">
                 <div class="cardHeader">
-                    <h2>Motorista Novos</h2>
+                    <h2>Motorista Recentes</h2>
                 </div>
                 <table>
                     <tr>
@@ -82,6 +94,10 @@
                     <tr>
                         <td width="64px"><div class="imgBx"><img src="/admIMG.jpg" alt=""></div></td>
                         <td><h4>Gustavo Lobo</h4></td>
+                    </tr>
+                    <tr>
+                        <td width="64px"><div class="imgBx"><img src="/admIMG.jpg" alt=""></div></td>
+                        <td><h4>Artur Daniel</h4></td>
                     </tr>
                 </table>
             </div>
