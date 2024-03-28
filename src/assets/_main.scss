@@ -10,3 +10,36 @@
   box-sizing: border-box;
   font-family: sans-serif, Helvetica, Arial;
 }
+
+// Responsividade
+
+@media (max-width: 991px) {
+
+  .container {
+
+      .navigation {
+
+          left: -300px;
+  
+          &.active {
+              width: 300px;
+              left: 0;
+          }
+      }
+  
+      .main {
+          
+          width: 100%;
+          left: 0;
+
+          .cardBox {
+
+            grid-template-columns: repeat(2,1fr);
+          }
+  
+          &.active {
+              left: 300px;
+          }
+      }
+  }
+}

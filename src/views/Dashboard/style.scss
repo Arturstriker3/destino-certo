@@ -206,3 +206,98 @@
         }
     }
 }
+
+// Responsividade
+
+@media (max-width: 991px) {
+
+    .container {
+        
+        .navigation {
+  
+            left: -100%;
+    
+            &.active {
+                width: 100%;
+                left: 0;
+            }
+        }
+
+        .main {
+  
+            .cardBox {
+  
+                grid-template-columns: repeat(2,1fr);
+
+                &.active {
+                    left: 300px;
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 798px) {
+
+    .container {
+    
+        .main {
+  
+            .details {
+  
+              grid-template-columns: repeat(1,1fr);
+
+              .recentOrders {
+                overflow-x: auto;
+
+                table {
+
+                    tr {
+
+                        .status.delivered {
+                            white-space: nowrap;
+                        }
+                    }
+                }
+              }
+            }
+        }
+    }
+}
+
+@media(max-width: 480px) {
+
+    .container {
+    
+        .main {
+
+            .details {
+  
+                .recentOrders {
+  
+                  .cardHeader {
+
+                    h2 {
+                        font-size: 16px;
+                    }
+                  }
+                }
+
+                .recentCustomers {
+                    h2 {
+                        font-size: 16px;
+                    }
+                }
+            }
+  
+            .cardBox {
+  
+                grid-template-columns: repeat(1,1fr);
+
+                &.active {
+                    left: 300px;
+                }
+            }
+        }
+    }
+}

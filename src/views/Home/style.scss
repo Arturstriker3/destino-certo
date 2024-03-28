@@ -201,13 +201,13 @@ body {
 @media (max-width: 991px) {
 
     .container {
-
+  
         .navigation {
-
+  
             left: -300px;
     
             &.active {
-                width: 300px;
+                width: 100%;
                 left: 0;
             }
         }
@@ -216,9 +216,46 @@ body {
             
             width: 100%;
             left: 0;
-    
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+  
+        .navigation {
+            
+            width: 100%;
+            left: -100%;
+            z-index: 1000;
+
             &.active {
-                left: 300px;
+                width: 100%;
+                left: 0;
+            }
+        }
+    
+        .main {
+
+            &.active {
+                
+                .toggle {
+                    position: fixed;
+                    right: 0;
+                    left: initial;
+                    color: $ColorWhite;
+                }
+            }
+            
+            .topbar {
+
+                .toggle {
+                    z-index: 10001;
+                }
+                
+                .user {
+                    min-width: 40px;
+                }
             }
         }
     }
