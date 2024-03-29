@@ -5,7 +5,7 @@
             <div class="card">
                 <div>
                     <div class="number">1,504</div>
-                    <div class="cardName">Usuários</div>
+                    <div class="cardName">Passageiros</div>
                 </div>
                 <div class="iconBx">
                     <ion-icon name="people-outline"></ion-icon>

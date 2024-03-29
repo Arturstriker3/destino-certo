@@ -118,6 +118,8 @@
 
                     tr {
 
+                        
+
                         &:last-child {
                             border-bottom: none;
                         }
@@ -173,9 +175,11 @@
                 table {
 
                     tr {
-
+                        
                         td {
                             padding: 8px 8px;
+                            // background: red;
+                            
 
                             .imgBx {
                                 position: relative;
@@ -198,6 +202,11 @@
                                 font-size: 16px;
                                 font-weight: 500;
                                 line-height: 1.2em;
+
+                                border-radius: 16px;
+                                padding: 8px 8px 8px 0;
+                                background: $ColorWhite;
+                                filter: brightness(99%);
                             }
                         }
                     }
