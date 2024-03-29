@@ -1,0 +1,217 @@
+
+@import '/src/assets/main';
+
+.container {
+
+    .main {
+        
+        .form-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            background: $ColorWhite;
+
+            overflow-y: auto;
+            
+            .container {
+                position: relative;
+                max-width: 700px;
+                width: 100%;
+                background: $ColorWhite;
+                padding: 24px;
+                border-radius: 16px;
+                box-shadow: 0 0 16px rgba(0, 0, 0, 0.1);
+
+                header {
+                    font-size: 1.5rem;
+                    color: $ColorBlack;
+                    font-weight: 500;
+                    text-align: center;
+                }
+
+                .form {
+                    margin-top: 32px;
+
+                    .input-box {
+                        width: 100%;
+                        margin-top: 16px;
+
+                        label {
+                            color: $ColorBlack;
+                            font-weight: 550;
+                        }
+
+                        input {
+                            position: relative;
+                            height: 48px;
+                            width: 100%;
+                            outline: none;
+                            font-size: 1rem;
+                            margin-top: 8px;
+                            color: $ColorBlack;
+                            border: 4px solid $ColorWhite;
+                            border-radius: 8px;
+                            padding: 0 16px;
+                            filter: brightness(98%);
+
+                            &:hover {
+                                filter: brightness(96%);
+                            }
+
+                            &:focus {
+                                outline: none;
+                                box-shadow: 0 0 2px $ColorBlack;
+                            }
+
+                            &::-webkit-inner-spin-button,
+                            ::-webkit-outer-spin-button {
+                                -webkit-appearance: none;
+                                appearance: none;
+                            }
+                        }
+
+                        .input-date {
+                            cursor: text;
+
+                            &::-webkit-calendar-picker-indicator {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                    
+                    .column {
+                        display: flex;
+                        column-gap: 16px;
+                    }
+
+                    .gender-box {
+
+                        margin-top: 16px;
+                        margin-bottom: 16px;
+
+                        h3 {
+                            color: $ColorBlack;
+                            font-size: 1rem;
+                            font-weight: 550;
+                            margin-bottom: 8px;
+                        }
+
+                        .gender-option {
+
+                            display: flex;
+                            align-items: center;
+                            column-gap: 48px;
+                            flex-wrap: wrap;
+                            justify-content: space-between;
+                            padding-left: 8px;
+                            padding-right: 8px;
+
+                            .gender {
+
+                                column-gap: 4px;
+                                
+                                input {
+                                    margin-right: 4px;
+                                    cursor: pointer;
+                                    accent-color: $Color1;
+                                }
+
+                                label {
+
+                                    cursor: pointer;
+                                    color: $ColorBlack;
+                                }
+                            }
+                        }
+                    }
+
+                    .input-box.adress {
+                        
+                        .column {
+
+                            .select-box {
+                                position: relative;
+                                height: 48px;
+                                width: 100%;
+                                outline: none;
+                                font-size: 1rem;
+                                margin-top: 8px;
+                                color: $ColorBlack;
+                                border: 4px solid $ColorWhite;
+                                border-radius: 8px;
+                                padding: 0 16px;
+                                filter: brightness(98%);
+
+                                select {
+
+                                    height: 100%;
+                                    width: 100%;
+                                    outline: none;
+                                    border: none;
+                                    cursor: pointer;
+                                    color: $ColorBlack;
+                                    font-size: 1rem;
+                                    // margin-top: 8px; 
+                                }
+                            }
+                        }
+                    }
+
+                    .form-send {
+                        height: 56px;
+                        width: 100%;
+                        color: $ColorWhite;
+                        font-size: 1rem;
+                        font-weight: 400;
+                        border: none;
+                        margin-top: 32px;
+                        cursor: pointer;
+                        border-radius: 8px;
+                        transition: all 0.2s ease;
+                        background-color: $Color1;
+
+                        &:hover {
+                            background-color: $Color1;
+                            filter: brightness(95%);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// Responsividade
+
+@media screen and (max-width: 500px) {
+    .container {
+
+        .main {
+            
+            .form-container {
+                
+                .container {
+    
+                    .form {
+                        .column {
+                            flex-wrap: wrap;
+                        }
+
+                        .gender-box {
+
+                            .gender-option {
+
+                                .gender {
+
+                                    row-gap: 16px;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

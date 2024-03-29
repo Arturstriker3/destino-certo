@@ -8,14 +8,14 @@ const routes = [
     component: Home
   },
   {
-    path: '/Dashboard',
-    name: 'Dashboard',
+    path: '/dashboard',
+    name: 'dashboard',
     component: () => import('../views/Dashboard/DashboardView.vue')
   },
   {
-    path: '/newUser',
-    name: 'newUserForm',
-    component: () => import('../views/newUserForm/userFormView.vue')
+    path: '/newPassenger',
+    name: 'newPassengerForm',
+    component: () => import('../views/Passenger Form/newPassengerView.vue')
   }
   
 ];
