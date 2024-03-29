@@ -1,6 +1,7 @@
 
 @import './colors';
 
+
 * {
   margin: 0;
   padding: 0;
@@ -19,10 +20,10 @@
 
       .navigation {
 
-          left: -300px;
+          left: -100%;
   
           &.active {
-              width: 300px;
+              width: 100%;
               left: 0;
           }
       }
@@ -31,11 +32,6 @@
           
           width: 100%;
           left: 0;
-
-          .cardBox {
-
-            grid-template-columns: repeat(2,1fr);
-          }
   
           &.active {
               left: 300px;

@@ -12,10 +12,12 @@
 import HomeView from '../Home/HomeView.vue';
 
 export default {
-  name: 'ClientesView',
+  name: 'newUserForm',
 
   components: {
     HomeView,
   }
 }
 </script>
+
+<style lang="scss" src="./style.scss"></style>
