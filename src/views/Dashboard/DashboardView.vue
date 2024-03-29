@@ -17,7 +17,7 @@
                     <div class="cardName">Motoristas</div>
                 </div>
                 <div class="iconBx">
-                    <ion-icon name="accessibility-outline"></ion-icon>
+                    <ion-icon name="man-outline"></ion-icon>
                 </div>
             </div>
             <div class="card">

@@ -2,7 +2,7 @@
     <HomeView>
       <template v-slot:slot-pages>
         <h1>
-            Clientes
+            Cadastro de Usuário
         </h1>
       </template>
     </HomeView>

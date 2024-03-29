@@ -13,9 +13,9 @@ const routes = [
     component: () => import('../views/Dashboard/DashboardView.vue')
   },
   {
-    path: '/Clientes',
-    name: 'Clientes',
-    component: () => import('../views/Clientes/ClientesView.vue')
+    path: '/newUser',
+    name: 'newUserForm',
+    component: () => import('../views/newUserForm/userFormView.vue')
   }
   
 ];

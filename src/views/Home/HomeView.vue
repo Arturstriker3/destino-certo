@@ -4,39 +4,64 @@
             <ul>
                 <li>
                     <a href="#">
-                        <span class="icon"><ion-icon name="car-sport-outline"></ion-icon></span>
+                        <span class="icon"><ion-icon name="car-sport-sharp"></ion-icon></span>
                         <span class="title">Destino Certo</span>
                     </a>
                 </li>
                 <li>
                     <router-link :to="{ name: 'Dashboard' }">
                         <a href="#">
-                            <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                            <span class="icon"><ion-icon name="home"></ion-icon></span>
                             <span class="title">Dashboard</span>
                         </a>
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'Clientes' }">
+                    <router-link :to="{ name: 'newUserForm' }">
                         <a href="#">
-                            <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                            <span class="title">Clientes</span>
+                            
+                            <span class="icon"><ion-icon name="person-add"></ion-icon></span>
+                            <span class="title">Cadastrar Usuário</span>
                         </a>
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'Clientes' }">
+                    <router-link :to="{ name: 'newUserForm' }">
                         <a href="#">
-                            <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                            <span class="title">Motoristas</span>
+                            <span class="icon"><ion-icon name="id-card"></ion-icon></span>
+                            <span class="title">Cadastrar Passageiro</span>
                         </a>
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'Clientes' }">
+                    <router-link :to="{ name: 'newUserForm' }">
                         <a href="#">
-                            <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
-                            <span class="title">Carros</span>
+                            <span class="icon"><ion-icon name="man"></ion-icon></span>
+                            <span class="title">Cadastrar Motorista</span>
+                        </a>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'newUserForm' }">
+                        <a href="#">
+                            <span class="icon"><ion-icon name="car"></ion-icon></span>
+                            <span class="title">Cadastrar Veículo</span>
+                        </a>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'newUserForm' }">
+                        <a href="#">
+                            <span class="icon"><ion-icon name="calendar"></ion-icon></span>
+                            <span class="title">Registrar Transporte</span>
+                        </a>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link :to="{ name: 'newUserForm' }">
+                        <a href="#">
+                            <span class="icon"><ion-icon name="cash"></ion-icon></span>
+                            <span class="title">Relatório Financeiro</span>
                         </a>
                     </router-link>
                 </li>
