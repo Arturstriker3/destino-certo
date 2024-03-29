@@ -16,7 +16,22 @@ const routes = [
     path: '/newPassenger',
     name: 'newPassengerForm',
     component: () => import('../views/Passenger Form/newPassengerView.vue')
-  }
+  },
+  {
+    path: '/newDriver',
+    name: 'newDriverForm',
+    component: () => import('../views/Driver Form/newDriverView.vue')
+  },
+  {
+    path: '/newVehicle',
+    name: 'newVehicleForm',
+    component: () => import('../views/Vehicle Form/newVehicleView.vue')
+  },
+  {
+    path: '/newTravel',
+    name: 'newTravelForm',
+    component: () => import('../views/Travel Form/newTravelView.vue')
+  },
   
 ];
 

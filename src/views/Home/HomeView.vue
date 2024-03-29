@@ -25,7 +25,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'newPassengerForm' }">
+                    <router-link :to="{ name: 'newDriverForm' }">
                         <a href="#">
                             <span class="icon"><ion-icon name="man"></ion-icon></span>
                             <span class="title">Cadastrar Motorista</span>
@@ -33,7 +33,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'newPassengerForm' }">
+                    <router-link :to="{ name: 'newVehicleForm' }">
                         <a href="#">
                             <span class="icon"><ion-icon name="car"></ion-icon></span>
                             <span class="title">Cadastrar Veículo</span>
@@ -41,7 +41,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'newPassengerForm' }">
+                    <router-link :to="{ name: 'newTravelForm' }">
                         <a href="#">
                             <span class="icon"><ion-icon name="calendar"></ion-icon></span>
                             <span class="title">Registrar Transporte</span>

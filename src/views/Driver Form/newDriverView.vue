@@ -3,7 +3,7 @@
       <template v-slot:slot-pages>
         <section class="form-container">
           <div class="container">
-            <header>Cadastro de Passageiro</header>
+            <header>Cadastro de Motorista</header>
             <form action="#" class="form">
               <div class="input-box">
                 <label>Nome Completo</label>
