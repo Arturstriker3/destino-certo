@@ -79,7 +79,7 @@
                 <div class="toggle"><ion-icon name="menu-outline" @click="menuToggle" ></ion-icon></div>
                 <div class="search">
                     <label>
-                        <input type="text" placeholder="Procurar Corrida">
+                        <input type="text" id="searchField" placeholder="Procurar Corrida">
                         <ion-icon name="search-outline"></ion-icon>
                     </label>
                 </div>
