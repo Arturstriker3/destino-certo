@@ -13,12 +13,13 @@
               <div class="column">
                 <div class="input-box">
                   <label>CPF</label>
-                  <input type="number" placeholder="CPF" required>
+                  <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" maxlength="14">
                 </div>
 
                 <div class="input-box">
                   <label>Data de Nascimento</label>
-                  <input type="date" class="input-date" placeholder="Data de Nascimento" required>
+                  <input type="date" class="input-date" placeholder="Data de Nascimento" required @input="preventFutureDate">
+
                 </div>
               </div>
 
@@ -63,6 +64,8 @@ export default {
     return {
       cepUser: '',
       cepNumbers: '',
+      cpfUser: '',
+      cpfNumbers: '',
       uf: '',
       localidade: '',
       logradouro: '',
@@ -82,6 +85,20 @@ export default {
       this.cepNumbers = this.cepUser.replace(/\D/g, '');
     },
 
+    formatCpf() {
+      this.cpfUser = this.cpfUser.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
+    },
+
+    preventFutureDate() {
+      const selectedDate = new Date(event.target.value);
+      const currentDate = new Date();
+      if (selectedDate > currentDate) {
+      event.target.value = '';
+      window.alert('Por favor, selecione uma data válida.');
+    }
+    },
+
     async fetchAddress() {
       if (this.cepUser.length === 9) {
         try {
@@ -99,6 +116,7 @@ export default {
         window.alert('CEP inválido' + error)
       }
     },
+    
 
   },
 }
