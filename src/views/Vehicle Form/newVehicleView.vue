@@ -21,7 +21,7 @@
 
               <div class="input-box">
                 <label>CPF Motorista</label>
-                <input type="number" placeholder="CPF do Motorista" required>
+                <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" @keypress.enter="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
               </div>
             </div>
 
@@ -30,12 +30,12 @@
             <div class="column">
               <div class="input-box">
                 <label>Placa</label>
-                <input type="text" placeholder="Placa do Veículo" required>
+                <input type="text" placeholder="Placa do Veículo" v-model="plateUser" @blur="validatePlate" @keydown.enter="validatePlate" maxlength="8" required>
               </div>
 
               <div class="input-box">
                 <label>Ano</label>
-                <input type="number" class="input-date" placeholder="Ano do Veículo" required>
+                <input type="number" class="input-date" placeholder="Ano do Veículo" required @blur="validateYear" @keydown.enter="validateYear">
               </div>
             </div>
 
@@ -86,11 +86,57 @@
 import HomeView from '../Home/HomeView.vue';
 
 export default {
-name: 'newUserForm',
+  name: 'newUserForm',
 
-components: {
-  HomeView,
-}
+  data() {
+    return {
+      cpfUser: '',
+      cpfNumbers: '',
+      plateUser: '',
+      plateNumbers: '',
+    };
+  },
+
+  methods: {
+      formatCpf() {
+        this.cpfUser = this.cpfUser.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+        this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
+      },
+
+    validateYear() {
+      const keyCode = event.keyCode;
+      if (keyCode === 13 || event.type === 'blur') {
+        const currentYear = new Date().getFullYear();
+        const inputYear = parseInt(event.target.value, 10);
+          if (inputYear < 1885 || inputYear > currentYear) {
+            event.target.value = '';
+            window.alert('Por favor, insira um ano válido entre 1885 e o ano atual.');
+          }
+      }
+    },
+
+    validatePlate() {
+      const plateRegex = /^[A-Za-z]{3}-\d{4}$/;
+      const plateValue = event.target.value.toUpperCase();
+      if (!plateRegex.test(plateValue)) {
+        event.target.value = '';
+        window.alert('Por favor, insira uma placa válida no formato AAA-0000.');
+      } else {
+        this.plateNumbers = plateValue.replace('-', ''); // Remove o hífen da placa e armazena em plateNumbers
+      }
+    },
+
+    validateCpf(event) {
+      if (this.cpfUser.length !== 14) {
+        window.alert('Por favor, insira um CPF válido com 11 dígitos.');
+        this.cpfUser = ''; // Limpa o valor do input
+      }
+    },
+  },
+
+  components: {
+    HomeView,
+  }
 }
 </script>
 

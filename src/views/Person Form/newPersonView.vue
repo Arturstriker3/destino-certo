@@ -13,7 +13,7 @@
               <div class="column">
                 <div class="input-box">
                   <label>CPF</label>
-                  <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" maxlength="14">
+                  <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" @keypress.enter="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
                 </div>
 
                 <div class="input-box">
@@ -94,9 +94,16 @@ export default {
       const selectedDate = new Date(event.target.value);
       const currentDate = new Date();
       if (selectedDate > currentDate) {
-      event.target.value = '';
-      window.alert('Por favor, selecione uma data válida.');
-    }
+        event.target.value = '';
+        window.alert('Por favor, selecione uma data válida.');
+      }
+    },
+
+    validateCpf(event) {
+      if (this.cpfUser.length !== 14) {
+        window.alert('Por favor, insira um CPF válido com 11 dígitos.');
+        this.cpfUser = '';
+      }
     },
 
     async fetchAddress() {
