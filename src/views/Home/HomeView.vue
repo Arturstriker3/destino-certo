@@ -17,18 +17,10 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'newPassengerForm' }">
+                    <router-link :to="{ name: 'newPersonForm' }">
                         <a href="#">
                             <span class="icon"><ion-icon name="person"></ion-icon></span>
-                            <span class="title">Cadastrar Passageiro</span>
-                        </a>
-                    </router-link>
-                </li>
-                <li>
-                    <router-link :to="{ name: 'newDriverForm' }">
-                        <a href="#">
-                            <span class="icon"><ion-icon name="man"></ion-icon></span>
-                            <span class="title">Cadastrar Motorista</span>
+                            <span class="title">Cadastrar Pessoa</span>
                         </a>
                     </router-link>
                 </li>
@@ -49,7 +41,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'newPassengerForm' }">
+                    <router-link :to="{ name: 'newPersonForm' }">
                         <a href="#">
                             <span class="icon"><ion-icon name="cash"></ion-icon></span>
                             <span class="title">Relatório Financeiro</span>

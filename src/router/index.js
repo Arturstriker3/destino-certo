@@ -17,14 +17,9 @@ const routes = [
     component: () => import('../views/Dashboard/DashboardView.vue')
   },
   {
-    path: '/newPassenger',
-    name: 'newPassengerForm',
-    component: () => import('../views/Passenger Form/newPassengerView.vue')
-  },
-  {
-    path: '/newDriver',
-    name: 'newDriverForm',
-    component: () => import('../views/Driver Form/newDriverView.vue')
+    path: '/newPerson',
+    name: 'newPersonForm',
+    component: () => import('../views/Person Form/newPersonView.vue')
   },
   {
     path: '/newVehicle',
