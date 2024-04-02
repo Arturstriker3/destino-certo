@@ -67,7 +67,7 @@
                     </div>
                 </div>
 
-                <div class="input-box-register">
+                <div class="input-box-register" @click="goToLogin">
                     <label>Logar-me</label>
                 </div>
 
@@ -84,8 +84,21 @@
 export default {
   name: 'RegisterView',
 
-  components: {
-    
+  methods: {
+    togglePasswordVisibility() {
+      const passwordInput = this.$refs.password;
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    },
+
+    goToLogin() {
+      this.$router.push({ name: 'Autentication' });
+    },
+
+
   }
 }
 </script>

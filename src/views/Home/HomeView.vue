@@ -54,6 +54,12 @@
                         <span class="title">Sair</span>
                     </a>
                 </li>
+                <li>
+                    <a href="#">
+                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
+                        <span class="title">{{ auth.token }}</span>
+                    </a>
+                </li>
             </ul>
         </div>
 
@@ -82,12 +88,24 @@
 
 <script>
 
+import { useAuthStore } from '../../stores/piniaStore';
+import { useCounterStore } from '../../stores/counter';
+
 export default {
     name: 'HomeView',
     data() {
         return {
             //
         }
+    },
+    setup() {
+        const auth = useAuthStore();
+        const counter = useCounterStore();
+
+        return {
+        auth,
+        counter,
+        };
     },
     methods: {
         menuToggle() {

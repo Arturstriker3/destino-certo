@@ -3,25 +3,25 @@
     <section class="form-container">
         <div class="container">
             <header>Login</header>
-            <form action="#" class="form">
+            <form @submit.prevent="login" class="form">
 
                 <div class="input-box">
                     <label>Usuário</label>
-                    <input type="text" placeholder="Usuário" required>
+                    <input type="text" v-model="email" placeholder="Email" @blur="validateEmail" required>
                 </div>
 
                 <div class="input-box">
                     <label>Senha</label>
-                    <input type="password" placeholder="Senha" ref="password" required>
+                    <input type="password" v-model="password" placeholder="Senha" ref="password" required>
                     <ion-icon name="eye" class="eye-icon" @click="togglePasswordVisibility"></ion-icon>
                 </div>
 
-                <div class="input-box-register">
+                <div class="input-box-register" @click="goToRegister">
                     <label>Registrar-me</label>
                 </div>
 
                 <div class="btn-center">
-                    <button class="form-send">Acessar</button>
+                    <button type="submit" class="form-send">Acessar</button>
                 </div>
             </form>
         </div>
@@ -30,8 +30,27 @@
 
 <script>
 
+import axios from 'axios';
+import { useAuthStore } from '../../stores/piniaStore';
+
 export default {
   name: 'AutenticationView',
+
+  setup() {
+    const authStore = useAuthStore();
+
+    return {
+      authStore,
+    };
+  },
+
+  data() {
+    return {
+      email: '',
+      password: '',
+      showAlert: false,
+    };
+  },
 
   methods: {
     togglePasswordVisibility() {
@@ -43,7 +62,46 @@ export default {
       }
     },
 
-    
+    goToRegister() {
+      this.$router.push({ name: 'Register' });
+    },
+
+    validateEmail() {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+        if (!emailRegex.test(this.email)) {
+            if (!this.showAlert) {
+                this.showAlert = true;
+                window.alert('Por favor, insira um email válido.');
+                this.email = '';
+                setTimeout(() => {
+                    this.showAlert = false;
+                }, 100);
+            }
+        }
+    },
+
+    async login() {
+        try {
+            const response = await axios.post('https://destinocerto.azurewebsites.net/api/Authentication/login', {
+            email: this.email,
+            password: this.password,
+            });
+
+            if (response.status === 200) {
+                const token = response.data;
+                this.authStore.setToken(token);
+                console.log('Login efetuado com sucesso:', token);
+                setTimeout(() => {
+                    this.$router.push({ name: 'dashboard' });
+                }, 5000);
+            } else {
+            window.alert('Credenciais inválidas. Por favor, tente novamente.');
+            }
+        } catch (error) {
+            console.error('Erro ao fazer login:', error);
+            window.alert('Ocorreu um erro ao fazer login. Por favor, tente novamente mais tarde.');
+        }
+    },
   }
 }
 </script>
