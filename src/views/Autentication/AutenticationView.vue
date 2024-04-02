@@ -96,7 +96,7 @@ export default {
                 console.log('Login efetuado com sucesso:', token);
                 setTimeout(() => {
                     this.$router.push({ name: 'dashboard' });
-                }, 5000);
+                }, 1000);
             } else {
             window.alert('Credenciais inválidas. Por favor, tente novamente.');
             }

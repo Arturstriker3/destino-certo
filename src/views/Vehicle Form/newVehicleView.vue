@@ -4,7 +4,7 @@
       <section class="form-container">
         <div class="container">
           <header>Cadastro de Veículo</header>
-          <form action="#" class="form">
+          <form @submit.prevent="sendForm" class="form">
 
             <div class="gender-box">
               <h3>Adicionar Veículo:</h3>
@@ -66,24 +66,24 @@
 
               <div class="input-box">
                 <label>Ano</label>
-                <input type="number" class="input-date" placeholder="Ano do Veículo" maxlength="4" required @blur="validateYear">
+                <input type="number" class="input-date" placeholder="Ano do Veículo" maxlength="4" v-model="year" required @blur="validateYear">
               </div>
             </div>
 
             <div class="column">
               <div class="input-box">
                 <label>Marca</label>
-                <input type="text" placeholder="Marca do Veículo" required>
+                <input type="text" placeholder="Marca do Veículo" v-model="brand" required>
               </div>
 
               <div class="input-box">
                 <label>Modelo</label>
-                <input type="text" class="input-date" placeholder="Modelo do Veículo" required>
+                <input type="text" class="input-date" placeholder="Modelo do Veículo" v-model="model" required>
               </div>
 
               <div class="input-box">
                 <label>Capacidade</label>
-                <input type="number" class="input-date" placeholder="Capacidade do Veículo" required @blur="validateCapacity">
+                <input type="number" class="input-date" placeholder="Capacidade do Veículo" v-model="capacity" required @blur="validateCapacity">
               </div>
             </div>
 
@@ -91,15 +91,15 @@
               <h3>Tipo</h3>
               <div class="gender-option">
                 <div class="gender">
-                  <input type="radio" id="check-car" name="vehicleType">
+                  <input type="radio" id="check-car" name="vehicleType" value="Car" v-model="vehicleType" @change="handleVehicleTypeChange">
                   <label for="check-car">Carro</label>
                 </div>
                 <div class="gender">
-                  <input type="radio" id="check-bus" name="vehicleType">
+                  <input type="radio" id="check-bus" name="vehicleType" value="Bus" v-model="vehicleType" @change="handleVehicleTypeChange">
                   <label for="check-bus">Ônibus</label>
                 </div>
                 <div class="gender">
-                  <input type="radio" id="check-van" name="vehicleType">
+                  <input type="radio" id="check-van" name="vehicleType" value="Van" v-model="vehicleType" @change="handleVehicleTypeChange">
                   <label for="check-van">Van</label>
                 </div>
               </div>
@@ -131,6 +131,11 @@ export default {
       token: '',
       drivers: [],
       people: [],
+      vehicleType: '',
+      brand: '',
+      model: '',
+      year: '',
+      capacity: '',
     };
   },
 
@@ -141,6 +146,42 @@ export default {
   },
 
   methods: {
+
+
+    sendForm() {
+      const formData = {
+        plate: this.plateNumbers,
+        brand: this.brand,
+        model: this.model,
+        year: this.year,
+        type: this.vehicleType,
+        capacity: this.capacity,
+        driverCpf: this.cpfNumbers
+      };
+
+      // Faça a solicitação HTTP POST
+      axios.post('https://destinocerto.azurewebsites.net/api/Vehicle', formData, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+      .then(response => {
+        if (response.status === 200) {
+          window.alert('Carro cadastrado!');
+          this.$router.push('/dashboard');
+        } else {
+          window.alert('Erro ao cadastrar carro.');
+        }
+      })
+      .catch(error => {
+        console.error('Erro ao cadastrar o carro:', error);
+        window.alert('Erro ao cadastrar carro. Tente novamente mais tarde.');
+      });
+    },
+
+      handleVehicleTypeChange(event) {
+        this.vehicleType = event.target.value;
+      },
 
       handleSelectChangePerson(selectedName) {
           // Encontrar o CPF correspondente ao nome selecionado
