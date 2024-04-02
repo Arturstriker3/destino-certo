@@ -8,4 +8,6 @@ const app = createApp(App);
 
 app.use(router).use(pinia);
 
+const token = localStorage.getItem('token');
+
 app.mount('#app');

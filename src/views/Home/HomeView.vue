@@ -49,7 +49,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <a href="#">
+                    <a href="#" @click="logout">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
                         <span class="title">Sair</span>
                     </a>
@@ -89,7 +89,7 @@
 <script>
 
 import { useAuthStore } from '../../stores/piniaStore';
-import { useCounterStore } from '../../stores/counter';
+import { useRouter } from 'vue-router';
 
 export default {
     name: 'HomeView',
@@ -100,11 +100,16 @@ export default {
     },
     setup() {
         const auth = useAuthStore();
-        const counter = useCounterStore();
+        const router = useRouter();
+
+        const logout = () => {
+            auth.clearToken(); // Limpa o token
+            router.push({ name: 'Autentication' }); // Redireciona para a página de registro
+        };
 
         return {
-        auth,
-        counter,
+            auth,
+            logout,
         };
     },
     methods: {
