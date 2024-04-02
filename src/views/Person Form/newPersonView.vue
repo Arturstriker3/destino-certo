@@ -4,10 +4,10 @@
         <section class="form-container">
           <div class="container">
             <header>Cadastro de Pessoa</header>
-            <form action="#" class="form">
+            <form @submit.prevent="sendForm" class="form">
               <div class="input-box">
                 <label>Nome Completo</label>
-                <input type="text" placeholder="Nome Completo" required>
+                <input type="text" placeholder="Nome Completo" v-model="name" required>
               </div>
 
               <div class="column">
@@ -17,9 +17,9 @@
                 </div>
 
                 <div class="input-box">
+                  <h1>{{ dateOfBirth }}</h1>
                   <label>Data de Nascimento</label>
-                  <input type="date" class="input-date" placeholder="Data de Nascimento" required @input="preventFutureDate">
-
+                  <input type="date" class="input-date" v-model="dateOfBirth" placeholder="Data de Nascimento" required @input="preventFutureDate">
                 </div>
               </div>
 
@@ -66,6 +66,8 @@ export default {
       cepNumbers: '',
       cpfUser: '',
       cpfNumbers: '',
+      name: '',
+      dateOfBirth: '',
       uf: '',
       localidade: '',
       logradouro: '',
@@ -75,15 +77,71 @@ export default {
         uf: '',
         localidade: '',
       },
+      token: '',
 
     };
   },
 
+  mounted() {
+    this.token = this.getTokenFromLocalStorage();
+  },
+
   methods: {
+
+    getTokenFromLocalStorage() {
+      return localStorage.getItem('token');
+    },
+
+    async sendForm() {
+      const formData = {
+        cpf: this.cpfNumbers,
+        cep: this.cepNumbers,
+        name: this.name,
+        dateOfBirth: this.completeDateOfBirth(this.dateOfBirth),
+      };
+
+      try {
+        const response = await axios.post('https://destinocerto.azurewebsites.net/api/Person/register', formData, {
+          headers: {
+            Authorization: `Bearer ${this.token}`
+          }
+        });
+
+        if (response.status === 200) {
+          window.alert('Dado adicionado!');
+          this.$router.push('/dashboard');
+        } else {
+          window.alert('Erro ao enviar dados. Código do erro: ' + response.status);
+        }
+
+      } catch (error) {
+        console.error('Erro ao enviar formulário:', error);
+        window.alert('Erro ao enviar dados: ' + error.message);
+      }
+    },
+
+    completeDateOfBirth(dateOfBirth) {
+      // Cria uma nova data com a data de nascimento fornecida
+      const dob = new Date(dateOfBirth);
+      
+      // Define os valores de hora, minuto, segundo e milissegundo
+      dob.setUTCHours(0);
+      dob.setUTCMinutes(0);
+      dob.setUTCSeconds(0);
+      dob.setUTCMilliseconds(0);
+      
+      // Retorna a data de nascimento completa no formato ISO 8601
+      return dob.toISOString();
+    },
 
     formatCpf() {
       this.cpfUser = this.cpfUser.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
       this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
+    },
+
+    formatCep() {
+      this.cepUser = this.cepUser.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
+      this.cepNumbers = this.cepUser.replace(/\D/g, '');
     },
 
     preventFutureDate() {

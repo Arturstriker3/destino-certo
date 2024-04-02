@@ -6,24 +6,55 @@
           <header>Cadastro de Veículo</header>
           <form action="#" class="form">
 
-            <div class="column">
-              <div class="input-box">
-                <label>Nome Motorista</label>
-                <div class="select-box">
-                  <select required>
-                    <option hidden>Nomes</option>
-                    <option>Artur</option>
-                    <option>Alex</option>
-                    <option>Gustavo</option>
-                  </select>
+            <div class="gender-box">
+              <h3>Adicionar Veículo:</h3>
+              <div class="gender-option">
+                <div class="gender">
+                  <input type="radio" id="check-newDriver" name="driverType" value="newDriver" @change="handleDriverTypeChange('newDriver')" checked>
+                  <label for="check-newDriver">Motorista Novo</label>
                 </div>
+                <div class="gender">
+                  <input type="radio" id="check-oldDriver" name="driverType" value="oldDriver" @change="handleDriverTypeChange('oldDriver')">
+                  <label for="check-oldDriver">Motorista Existente</label>
+                </div>
+              </div>
+            </div>
+
+            
+
+            <div class="column" v-show="isNewDriver">
+              <div class="input-box">
+                  <label>Nome Motorista Novo</label>
+                  <div class="select-box">
+                      <select required @change="handleSelectChangePerson($event.target.value)">
+                          <option hidden>Nomes</option>
+                          <option v-for="person in people" :key="person.cpf" :value="person.name">{{ person.name }}</option>
+                      </select>
+                  </div>
               </div>
 
               <div class="input-box">
-                <label>CPF Motorista</label>
-                <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
+                  <label>CPF Motorista Novo</label>
+                  <input type="text" placeholder="CPF" v-model="cpfNumbers" readonly>
               </div>
-            </div>
+          </div>
+
+          <div class="column" v-show="!isNewDriver">
+              <div class="input-box">
+                  <label>Nome Motorista Existente</label>
+                  <div class="select-box">
+                      <select required @change="handleSelectChangeDriver($event.target.value)">
+                          <option hidden>Nomes</option>
+                          <option v-for="driver in drivers" :key="driver.cpf" :value="driver.name">{{ driver.name }}</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="input-box">
+                  <label>CPF Motorista Existente</label>
+                  <input type="text" placeholder="CPF" v-model="cpfNumbers" readonly>
+              </div>
+          </div>
 
             
 
@@ -84,21 +115,95 @@
 
 <script>
 import HomeView from '../Home/HomeView.vue';
+import axios from 'axios'
 
 export default {
   name: 'newUserForm',
 
   data() {
     return {
+      isNewDriver: true,
       cpfUser: '',
       cpfNumbers: '',
       plateUser: '',
       plateNumbers: '',
       showAlert: false,
+      token: '',
+      drivers: [],
+      people: [],
     };
   },
 
+  mounted() {
+    this.token = this.getTokenFromLocalStorage();
+    this.getDrivers();
+    this.getPeople();
+  },
+
   methods: {
+
+      handleSelectChangePerson(selectedName) {
+          // Encontrar o CPF correspondente ao nome selecionado
+          const selectedPerson = this.people.find(person => person.name === selectedName);
+          if (selectedPerson) {
+              this.cpfNumbers = selectedPerson.cpf;
+          }
+      },
+
+      handleSelectChangeDriver(selectedName) {
+          // Encontrar o CPF correspondente ao nome selecionado
+          const selectedDriver = this.drivers.find(driver => driver.name === selectedName);
+          if (selectedDriver) {
+              this.cpfNumbers = selectedDriver.cpf;
+          }
+      },
+
+      handleDriverTypeChange(driverType) {
+          this.isNewDriver = (driverType === 'newDriver');
+          const selectElements = document.querySelectorAll('select');
+          selectElements.forEach(select => {
+              const options = select.querySelectorAll('option');
+              options.forEach(option => {
+                  if (option.hidden) {
+                      option.selected = true;
+                  }
+              });
+          });
+          this.cpfNumbers = '';
+      },
+
+      getDrivers() {
+        axios.get('https://destinocerto.azurewebsites.net/api/Person/drivers', {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then(response => {
+          this.drivers = response.data; // Armazena os motoristas na variável drivers
+        })
+        .catch(error => {
+          console.error('Erro ao obter a lista de motoristas:', error);
+        });
+      },
+
+      getPeople() {
+        axios.get('https://destinocerto.azurewebsites.net/api/Person/passengers', {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then(response => {
+          this.people = response.data; // Armazena as pessoas que não são motoristas na variável people
+        })
+        .catch(error => {
+          console.error('Erro ao obter a lista de pessoas:', error);
+        });
+      },
+
+      getTokenFromLocalStorage() {
+        return localStorage.getItem('token');
+      },
+
       formatCpf() {
         this.cpfUser = this.cpfUser.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
         this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
