@@ -21,7 +21,7 @@
 
                 <div class="input-box">
                   <label>Digitar Placa</label>
-                  <input type="text" placeholder="Placa do Carro" required>
+                  <input type="text" placeholder="Placa do Veículo" v-model="plateUser" @blur="validatePlate" maxlength="8" required>
                 </div>
               </div>
 
@@ -40,7 +40,7 @@
 
                 <div class="input-box">
                   <label>CPF Passageiro</label>
-                  <input type="number" placeholder="CPF do Passageiro" required>
+                  <input type="text" placeholder="CPF do Passageiro" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
                 </div>
               </div>
               
@@ -82,6 +82,54 @@ import HomeView from '../Home/HomeView.vue';
 
 export default {
   name: 'newUserForm',
+
+  data() {
+    return {
+      cpfUser: '',
+      cpfNumbers: '',
+      plateUser: '',
+      plateNumbers: '',
+      showAlert: false,
+    };
+  },
+
+  methods: {
+    formatCpf() {
+      this.cpfUser = this.cpfUser.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+      this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
+    },
+
+    validatePlate() {
+      const plateRegex = /^[A-Za-z]{3}-\d{4}$/;
+      const plateValue = event.target.value.toUpperCase();
+      if (!plateRegex.test(plateValue)) {
+        if (!this.showAlert) {
+          this.showAlert = true;
+          event.target.value = '';
+          window.alert('Por favor, insira uma placa válida no formato AAA-0000.');
+          this.plateUser = '';
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 100);
+        }
+      } else {
+        this.plateNumbers = plateValue.replace('-', '');
+      }
+    },
+
+    validateCpf() {
+      if (this.cpfUser.length !== 14) {
+        if (!this.showAlert) {
+          this.showAlert = true;
+          window.alert('Por favor, insira um CPF válido com 11 dígitos.');
+          this.cpfUser = '';
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 100);
+        }
+      }
+    },
+  },
 
   components: {
     HomeView,

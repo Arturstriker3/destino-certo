@@ -13,7 +13,7 @@
               <div class="column">
                 <div class="input-box">
                   <label>CPF</label>
-                  <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" @keypress.enter="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
+                  <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
                 </div>
 
                 <div class="input-box">
@@ -69,6 +69,7 @@ export default {
       uf: '',
       localidade: '',
       logradouro: '',
+      showAlert: false,
       addressData: {
         logradouro: '',
         uf: '',
@@ -99,10 +100,16 @@ export default {
       }
     },
 
-    validateCpf(event) {
+    validateCpf() {
       if (this.cpfUser.length !== 14) {
-        window.alert('Por favor, insira um CPF válido com 11 dígitos.');
-        this.cpfUser = '';
+        if (!this.showAlert) {
+          this.showAlert = true;
+          window.alert('Por favor, insira um CPF válido com 11 dígitos.');
+          this.cpfUser = '';
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 100);
+        }
       }
     },
 
@@ -110,17 +117,42 @@ export default {
       if (this.cepUser.length === 9) {
         try {
           const response = await axios.get(`https://viacep.com.br/ws/${this.cepNumbers}/json/`);
-          const { logradouro, uf, localidade } = response.data;
-          this.addressData = { logradouro, uf, localidade };
-          this.uf = uf; 
-          this.logradouro = logradouro;
-          this.localidade = localidade;
-          console.log(this.addressData);
+          if (!response.data.erro) {
+            const { logradouro, uf, localidade } = response.data;
+            this.addressData = { logradouro, uf, localidade };
+            this.uf = uf; 
+            this.logradouro = logradouro;
+            this.localidade = localidade;
+            console.log(this.addressData);
+          } else {
+            if (!this.showAlert) {
+              this.showAlert = true;
+              window.alert('CEP não encontrado.');
+              this.cepUser = '';
+              setTimeout(() => {
+                this.showAlert = false;
+              }, 100);
+            }
+          }
         } catch (error) {
-          window.alert('Erro ao buscar CEP: ' + error);
+          if (!this.showAlert) {
+            this.showAlert = true;
+            window.alert('Erro ao buscar CEP: ' + error);
+            this.cepUser = '';
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 100);
+          }
         }
-      } else {
-        window.alert('CEP inválido' + error)
+      } else if (this.cepUser.length > 0) {
+        if (!this.showAlert) {
+          this.showAlert = true;
+          window.alert('Por favor, insira um CEP válido no formato 00000-000.');
+          this.cepUser = '';
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 100);
+        }
       }
     },
     

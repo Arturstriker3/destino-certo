@@ -21,7 +21,7 @@
 
               <div class="input-box">
                 <label>CPF Motorista</label>
-                <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" @keypress.enter="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
+                <input type="text" placeholder="CPF" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
               </div>
             </div>
 
@@ -30,12 +30,12 @@
             <div class="column">
               <div class="input-box">
                 <label>Placa</label>
-                <input type="text" placeholder="Placa do Veículo" v-model="plateUser" @blur="validatePlate" @keydown.enter="validatePlate" maxlength="8" required>
+                <input type="text" placeholder="Placa do Veículo" v-model="plateUser" @blur="validatePlate" maxlength="8" required>
               </div>
 
               <div class="input-box">
                 <label>Ano</label>
-                <input type="number" class="input-date" placeholder="Ano do Veículo" required @blur="validateYear" @keydown.enter="validateYear">
+                <input type="number" class="input-date" placeholder="Ano do Veículo" maxlength="4" required @blur="validateYear">
               </div>
             </div>
 
@@ -52,7 +52,7 @@
 
               <div class="input-box">
                 <label>Capacidade</label>
-                <input type="number" class="input-date" placeholder="Modelo do Veículo" required>
+                <input type="number" class="input-date" placeholder="Capacidade do Veículo" required @blur="validateCapacity">
               </div>
             </div>
 
@@ -94,6 +94,7 @@ export default {
       cpfNumbers: '',
       plateUser: '',
       plateNumbers: '',
+      showAlert: false,
     };
   },
 
@@ -103,35 +104,65 @@ export default {
         this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
       },
 
-    validateYear() {
-      const keyCode = event.keyCode;
-      if (keyCode === 13 || event.type === 'blur') {
+      validateYear() {
         const currentYear = new Date().getFullYear();
         const inputYear = parseInt(event.target.value, 10);
-          if (inputYear < 1885 || inputYear > currentYear) {
+        if (inputYear < 1885 || inputYear > currentYear) {
+          if (!this.showAlert) {
+            this.showAlert = true;
             event.target.value = '';
             window.alert('Por favor, insira um ano válido entre 1885 e o ano atual.');
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 100);
           }
-      }
-    },
+        }
+      },
 
-    validatePlate() {
-      const plateRegex = /^[A-Za-z]{3}-\d{4}$/;
-      const plateValue = event.target.value.toUpperCase();
-      if (!plateRegex.test(plateValue)) {
-        event.target.value = '';
-        window.alert('Por favor, insira uma placa válida no formato AAA-0000.');
-      } else {
-        this.plateNumbers = plateValue.replace('-', ''); // Remove o hífen da placa e armazena em plateNumbers
-      }
-    },
+      validatePlate() {
+        const plateRegex = /^[A-Za-z]{3}-\d{4}$/;
+        const plateValue = event.target.value.toUpperCase();
+        if (!plateRegex.test(plateValue)) {
+          if (!this.showAlert) {
+            this.showAlert = true;
+            event.target.value = '';
+            window.alert('Por favor, insira uma placa válida no formato AAA-0000.');
+            this.plateUser = '';
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 100);
+          }
+        } else {
+          this.plateNumbers = plateValue.replace('-', '');
+        }
+      },
 
-    validateCpf(event) {
-      if (this.cpfUser.length !== 14) {
-        window.alert('Por favor, insira um CPF válido com 11 dígitos.');
-        this.cpfUser = ''; // Limpa o valor do input
-      }
-    },
+      validateCpf() {
+        if (this.cpfUser.length !== 14) {
+          if (!this.showAlert) {
+            this.showAlert = true;
+            window.alert('Por favor, insira um CPF válido com 11 dígitos.');
+            this.cpfUser = '';
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 100);
+          }
+        }
+      },
+
+      validateCapacity() {
+        const capacityValue = parseInt(event.target.value, 10);
+        if (capacityValue < 2 || capacityValue > 300) {
+          if (!this.showAlert) {
+            this.showAlert = true;
+            event.target.value = '';
+            window.alert('Por favor, insira uma capacidade válida entre 2 e 300.');
+            setTimeout(() => {
+              this.showAlert = false;
+            }, 100);
+          }
+        }
+      },
   },
 
   components: {

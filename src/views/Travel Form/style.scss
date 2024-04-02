@@ -131,6 +131,36 @@
                         
                         .column {
 
+                            .input-box {
+
+                                .select-box {
+                                    position: relative;
+                                    height: 48px;
+                                    width: 100%;
+                                    outline: none;
+                                    font-size: 1rem;
+                                    margin-top: 8px;
+                                    color: $ColorBlack;
+                                    border: 4px solid $ColorWhite;
+                                    border-radius: 8px;
+                                    padding: 0 16px;
+                                    filter: brightness(98%);
+    
+                                    select {
+    
+                                        height: 100%;
+                                        width: 100%;
+                                        outline: none;
+                                        border: none;
+                                        cursor: pointer;
+                                        color: $ColorBlack;
+                                        font-size: 1rem;
+                                        // margin-top: 8px; 
+                                    }
+                                }
+                                
+                            }
+
                             .select-box {
                                 position: relative;
                                 height: 48px;
