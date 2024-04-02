@@ -12,8 +12,8 @@
 
                 <div class="input-box">
                     <label>Senha</label>
-                    <input type="text" placeholder="Senha" required>
-                    <ion-icon name="eye" class="eye-icon"></ion-icon>
+                    <input type="password" placeholder="Senha" ref="password" required>
+                    <ion-icon name="eye" class="eye-icon" @click="togglePasswordVisibility"></ion-icon>
                 </div>
 
                 <div class="input-box-register">
@@ -33,7 +33,16 @@
 export default {
   name: 'AutenticationView',
 
-  components: {
+  methods: {
+    togglePasswordVisibility() {
+      const passwordInput = this.$refs.password;
+      if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+      } else {
+        passwordInput.type = 'password';
+      }
+    },
+
     
   }
 }
