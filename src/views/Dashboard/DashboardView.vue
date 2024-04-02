@@ -2,36 +2,20 @@
     <HomeView>
       <template v-slot:slot-pages>
         <div class="cardBox">
-            <div class="card">
+            <div class="card" v-for="(vehicle, index) in vehicleData" :key="index">
                 <div>
-                    <div class="number">1,504</div>
-                    <div class="cardName">Passageiros</div>
+                    <div class="number">{{ vehicle.count }}</div>
+                    <div class="number">{{ 'R$ ' + vehicle.totalAmount.toFixed(2) }}</div>
+                    <div class="cardName">{{ vehicle.vehicleType }}</div>
                 </div>
                 <div class="iconBx">
-                    <ion-icon name="people-outline"></ion-icon>
+                    <ion-icon :name="getIconName(vehicle.vehicleType)"></ion-icon>
                 </div>
             </div>
+            <!-- Card para o total de viagens -->
             <div class="card">
                 <div>
-                    <div class="number">80</div>
-                    <div class="cardName">Motoristas</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name="man-outline"></ion-icon>
-                </div>
-            </div>
-            <div class="card">
-                <div>
-                    <div class="number">201</div>
-                    <div class="cardName">Veículos</div>
-                </div>
-                <div class="iconBx">
-                    <ion-icon name="car-outline"></ion-icon>
-                </div>
-            </div>
-            <div class="card">
-                <div>
-                    <div class="number">25</div>
+                    <div class="number">{{ totalTravels }}</div>
                     <div class="cardName">Viagens</div>
                 </div>
                 <div class="iconBx">
@@ -43,62 +27,27 @@
         <div class="details">
             <div class="recentOrders">
                 <div class="cardHeader">
-                    <h2>Viagens Recentes</h2>
-                    <a href="#" class="btn">Ver Mais</a>
+                    <h2>Viagens</h2>
+                    <!-- <a href="#" class="btn">Ver Mais</a> -->
                 </div>
                 <table>
                     <thead>
                         <tr>
                             <td>Viagem</td>
-                            <td>Motorista</td>
                             <td>Placa</td>
+                            <td>Cpf Passageiro</td>
                             <td>Total</td>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>Viagem 1</td>
-                            <td>Gustavo</td>
-                            <td>AHP-6969</td>
-                            <td><span class="status delivered">R$ 2500</span></td>
-                        </tr>
-                        <tr>
-                            <td>Viagem 2</td>
-                            <td>Alex Brito</td>
-                            <td>AHP-6969</td>
-                            <td><span class="status delivered">R$ 2500</span></td>
-                        </tr>
-                        <tr>
-                            <td>Viagem 3</td>
-                            <td>Marcos Felipe</td>
-                            <td>AHP-6969</td>
-                            <td><span class="status delivered">R$ 2500</span></td>
+                        <tr v-for="(trip, index) in historyData" :key="index">
+                            <td>{{ 'Viagem ' + (index + 1) }}</td>
+                            <td>{{ trip.vehiclePlate }}</td>
+                            <td>{{ trip.passengerCpf }}</td>
+                            
+                            <td><span class="status delivered">{{ 'R$ ' + trip.value }}</span></td>
                         </tr>
                     </tbody>
-                </table>
-            </div>
-
-            <div class="recentCustomers">
-                <div class="cardHeader">
-                    <h2>Motorista Recentes</h2>
-                </div>
-                <table>
-                    <tr>
-                        <td width="64px"><div class="imgBx"><img src="/admIMG.jpg" alt=""></div></td>
-                        <td><h4>Alex Brito</h4></td>
-                    </tr>
-                    <tr>
-                        <td width="64px"><div class="imgBx"><img src="/admIMG.jpg" alt=""></div></td>
-                        <td><h4>Marcos Felipe</h4></td>
-                    </tr>
-                    <tr>
-                        <td width="64px"><div class="imgBx"><img src="/admIMG.jpg" alt=""></div></td>
-                        <td><h4>Gustavo Lobo</h4></td>
-                    </tr>
-                    <tr>
-                        <td width="64px"><div class="imgBx"><img src="/admIMG.jpg" alt=""></div></td>
-                        <td><h4>Artur Daniel</h4></td>
-                    </tr>
                 </table>
             </div>
         </div>
@@ -109,13 +58,104 @@
 
 <script>
 import HomeView from '../Home/HomeView.vue';
+import axios from 'axios';
 
 export default {
-  name: 'DashboardView',
+    name: 'DashboardView',
 
-  components: {
+    components: {
     HomeView,
-  }
+    },
+
+    data() {
+        return {
+            showAlert: false,
+            token: '',
+            totalTravels: 0,
+            historyData: {},
+            vehicleData: {},
+            startDate: '1885-01-01',
+            endDate: '2030-01-01',
+        };
+    },
+
+    mounted() {
+        this.token = this.getTokenFromLocalStorage();
+        this.fetchHistory(); // chame a função para buscar o histórico
+        this.fetchVehicleHistory(); // Chama a função para buscar o histórico de veículos
+    },
+
+    methods: {
+        getTokenFromLocalStorage() {
+            return localStorage.getItem('token');
+        },
+
+        getIconName(vehicleType) {
+            switch (vehicleType) {
+                case 'Car':
+                    return 'people-outline';
+                case 'Van':
+                    return 'man-outline';
+                case 'Bus':
+                    return 'car-outline';
+                // Adicione mais casos conforme necessário
+                default:
+                    return 'help-outline'; // Ícone padrão caso o tipo de veículo não seja reconhecido
+            }
+        },
+
+        async fetchVehicleHistory() {
+            try {
+                const response = await axios.get('https://destinocerto.azurewebsites.net/api/History/reports', {
+                    params: {
+                        Start: this.startDate,
+                        End: this.endDate
+                    },
+                    headers: {
+                        Authorization: `Bearer ${this.token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.status === 200) {
+                    this.vehicleData = response.data;
+                    console.log('Dados de histórico de veículo recebidos:', this.vehicleData);
+                } else {
+                    console.error('Erro ao buscar histórico de veículo:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar histórico de veículo:', error);
+                // Trate os erros de acordo com a necessidade do seu aplicativo
+            }
+        },
+
+        async fetchHistory() {
+            try {
+                const response = await axios.get('https://destinocerto.azurewebsites.net/api/History/all', {
+                    params: {
+                        Start: this.startDate,
+                        End: this.endDate
+                    },
+                    headers: {
+                        Authorization: `Bearer ${this.token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                if (response.status === 200) {
+                    this.historyData = response.data;
+                    console.log('Dados recebidos:', this.historyData);
+                } else {
+                    console.error('Erro ao buscar histórico:', response.statusText);
+                }
+            } catch (error) {
+                console.error('Erro ao buscar histórico:', error);
+                // Trate os erros de acordo com a necessidade do seu aplicativo
+            }
+        },
+
+
+    },
 }
 </script>
 

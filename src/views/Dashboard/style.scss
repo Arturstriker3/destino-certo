@@ -59,13 +59,14 @@
             width: 100%;
             padding: 24px;
             display: grid;
-            grid-template-columns: 2fr 1fr;
+            // grid-template-columns: 1fr 1fr;
             grid-gap: 32px;
             margin-top: 8px;
 
             .recentOrders {
                 position: relative;
                 display: grid;
+                width: 100%;
                 min-height: 496 px;
                 background: $ColorWhite;
                 padding: 24px;
@@ -154,7 +155,8 @@
 
             .recentCustomers {
                 position: relative;
-                display: grid;
+                // display: grid;
+                display: none;
                 min-height: 496px;
                 padding: 24px;
                 background: $ColorWhite;

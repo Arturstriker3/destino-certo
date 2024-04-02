@@ -91,6 +91,7 @@ export default {
       drivers: [],
       driverCPF: '',
       driverVeiculos: [],
+      token: '',
     };
   },
 
