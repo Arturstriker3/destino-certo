@@ -4,7 +4,7 @@
         <section class="form-container">
           <div class="container">
             <header>Cadastro de Viagem</header>
-            <form action="#" class="form">
+            <form @submit.prevent="sendForm" class="form">
 
               <div class="column">
                 <div class="input-box">
@@ -50,21 +50,16 @@
 
               <div class="column">
                 <div class="input-box">
-                  <label>Horário</label>
-                  <input type="text" placeholder="Horário do Transporte" v-model="timeUser" @blur="validateHours" maxlength="5">
-                </div>
-
-                <div class="input-box">
                   <label>Data</label>
-                  <input type="date" class="input-date" placeholder="Data de Nascimento do Usuário" required>
+                  <input type="datetime-local" v-model="dateOfTravel" class="input-date" placeholder="Data de Nascimento do Usuário" required>
                 </div>
-              </div>
 
                 <div class="input-box">
                   <label>Quantidade de KMs</label>
                   <input type="number" placeholder="Quantidade de KMs Rodados " v-model="kilometersUser" @blur="validateKilometers" required>
                   
                 </div>
+              </div>
 
               <button class="form-send">Salvar</button>
             </form>
@@ -89,6 +84,7 @@ export default {
       plateNumbers: '',
       timeUser: '',
       timeNumbers: '',
+      dateOfTravel: '',
       kilometersUser: '',
       showAlert: false,
       people: [],
@@ -105,6 +101,54 @@ export default {
   },
 
   methods: {
+
+    sendForm() {
+      const formData = {
+        vehiclePlate: this.plateNumbers,
+        dateTime: this.dateOfTravel,
+        value: 0.40,
+        kilometers: this.kilometersUser,
+        passengerCpf: this.cpfNumbers,
+      };
+
+      console.log(formData)
+
+      axios.post('https://destinocerto.azurewebsites.net/api/History', formData, {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        // Se o código de status for 201, exibir alerta e redirecionar
+        if (response.status === 201) {
+          this.alertMessage = 'Viagem cadastrada!';
+          this.showAlert = true;
+          window.alert('Dado adicionado!');
+          this.$router.push('/dashboard');
+        }
+      })
+      .catch(error => {
+        // Se houver um erro, exibir mensagem de erro
+        this.alertMessage = 'Erro ao cadastrar viagem. Por favor, tente novamente.';
+        this.showAlert = true;
+        console.error('Erro ao enviar os dados:', error);
+      });
+    },
+
+    completeTime(dateTime) {
+      // Cria uma nova data com a data de nascimento fornecida
+      const dob = new Date(dateTime);
+      
+      // Define os valores de hora, minuto, segundo e milissegundo
+      dob.setUTCHours(0);
+      dob.setUTCMinutes(0);
+      dob.setUTCSeconds(0);
+      dob.setUTCMilliseconds(0);
+      
+      // Retorna a data de nascimento completa no formato ISO 8601
+      return dob.toISOString();
+    },
 
     handleSelectChangePerson(selectedName) {
         // Encontrar o CPF correspondente ao nome selecionado

@@ -17,7 +17,6 @@
                 </div>
 
                 <div class="input-box">
-                  <h1>{{ dateOfBirth }}</h1>
                   <label>Data de Nascimento</label>
                   <input type="date" class="input-date" v-model="dateOfBirth" placeholder="Data de Nascimento" required @input="preventFutureDate">
                 </div>
@@ -101,7 +100,7 @@ export default {
       };
 
       try {
-        const response = await axios.post('https://destinocerto.azurewebsites.net/api/Person/register', formData, {
+        const response = await axios.put('https://destinocerto.azurewebsites.net/api/Person/register', formData, {
           headers: {
             Authorization: `Bearer ${this.token}`
           }
