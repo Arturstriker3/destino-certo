@@ -50,6 +50,7 @@
 
               <div class="column">
                 <div class="input-box">
+                  <h1>{{ dateOfTravel }}</h1>
                   <label>Data</label>
                   <input type="datetime-local" v-model="dateOfTravel" class="input-date" placeholder="Data de Nascimento do Usuário" required>
                 </div>
@@ -104,9 +105,16 @@ export default {
   methods: {
 
     sendForm() {
+      // Formate a data antes de enviar o formulário
+      const formattedDate = this.dateOfTravel;
+
+      // Adicione os milissegundos manualmente à data formatada
+      const formattedDateTime = formattedDate + ':00.000Z';
+
+      // Crie o objeto formData com a data formatada
       const formData = {
         vehiclePlate: this.plateNumbers,
-        dateTime: this.dateOfTravel,
+        dateTime: formattedDateTime,
         value: 0.40,
         kilometers: this.kilometersUser,
         passengerCpf: this.cpfNumbers,
@@ -136,6 +144,8 @@ export default {
         console.error('Erro ao enviar os dados:', error);
       });
     },
+
+
 
     completeTime(dateTime) {
       // Cria uma nova data com a data de nascimento fornecida
