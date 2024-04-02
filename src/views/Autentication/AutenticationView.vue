@@ -54,12 +54,15 @@ export default {
 
   methods: {
     togglePasswordVisibility() {
-      const passwordInput = this.$refs.password;
-      if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-      } else {
-        passwordInput.type = 'password';
-      }
+        const passwordInput = this.$refs.password;
+        const eyeIcon = document.querySelector('.eye-icon');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.setAttribute('name', 'eye-off');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.setAttribute('name', 'eye');
+        }
     },
 
     goToRegister() {
