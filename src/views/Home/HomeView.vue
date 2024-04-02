@@ -41,23 +41,9 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link :to="{ name: 'newPersonForm' }">
-                        <a href="#">
-                            <span class="icon"><ion-icon name="cash"></ion-icon></span>
-                            <span class="title">Relatório Financeiro</span>
-                        </a>
-                    </router-link>
-                </li>
-                <li>
                     <a href="#" @click="logout">
                         <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
                         <span class="title">Sair</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <span class="icon"><ion-icon name="log-out-outline"></ion-icon></span>
-                        <span class="title">{{ auth.token }}</span>
                     </a>
                 </li>
             </ul>

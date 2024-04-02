@@ -39,6 +39,9 @@
                             <td>Total</td>
                         </tr>
                     </thead>
+                    <input type="text" placeholder="Data Start">
+                    <input type="text" placeholder="Data End">
+                    <button >Filtrar</button>
                     <tbody>
                         <tr v-for="(trip, index) in historyData" :key="index">
                             <td>{{ 'Viagem ' + (index + 1) }}</td>
@@ -90,6 +93,13 @@ export default {
             return localStorage.getItem('token');
         },
 
+        totalTravelsCount() {
+            for (const vehicle of this.vehicleData) {
+                this.totalTravels += vehicle.count;
+            }
+            return totalTravels;
+        },
+
         getIconName(vehicleType) {
             switch (vehicleType) {
                 case 'Car':
@@ -120,6 +130,8 @@ export default {
                 if (response.status === 200) {
                     this.vehicleData = response.data;
                     console.log('Dados de histórico de veículo recebidos:', this.vehicleData);
+
+                    this.totalTravelsCount();
                 } else {
                     console.error('Erro ao buscar histórico de veículo:', response.statusText);
                 }

@@ -50,7 +50,6 @@
 
               <div class="column">
                 <div class="input-box">
-                  <h1>{{ dateOfTravel }}</h1>
                   <label>Data</label>
                   <input type="datetime-local" v-model="dateOfTravel" class="input-date" placeholder="Data de Nascimento do Usuário" required>
                 </div>
