@@ -39,9 +39,9 @@
                             <td>Total</td>
                         </tr>
                     </thead>
-                    <input type="text" placeholder="Data Start">
-                    <input type="text" placeholder="Data End">
-                    <button >Filtrar</button>
+                    <input type="text" v-model="startDate" placeholder="Data Start">
+                    <input type="text" v-model="endDate" placeholder="Data End">
+                    <button @click="rangeData" >Filtrar</button>
                     <tbody>
                         <tr v-for="(trip, index) in historyData" :key="index">
                             <td>{{ 'Viagem ' + (index + 1) }}</td>
@@ -112,6 +112,12 @@ export default {
                 default:
                     return 'help-outline'; // Ícone padrão caso o tipo de veículo não seja reconhecido
             }
+        },
+
+        rangeData() {
+            this.fetchVehicleHistory()
+            this.fetchHistory()
+            console.log('Novo Data')
         },
 
         async fetchVehicleHistory() {
