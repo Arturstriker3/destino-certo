@@ -48,7 +48,7 @@
               <div class="column">
                 <div class="input-box">
                   <label>Horário</label>
-                  <input type="number" placeholder="Horário do Transporte" required>
+                  <input type="text" placeholder="Horário do Transporte" v-model="timeUser" @blur="validateHours" maxlength="5">
                 </div>
 
                 <div class="input-box">
@@ -60,7 +60,8 @@
               <div class="column">
                 <div class="input-box">
                   <label>Quantidade de KMs</label>
-                  <input type="number" placeholder="Quantidade de KMs Rodados " required>
+                  <input type="number" placeholder="Quantidade de KMs Rodados " v-model="kilometersUser" @blur="validateKilometers" required>
+                  
                 </div>
 
                 <div class="input-box">
@@ -89,6 +90,9 @@ export default {
       cpfNumbers: '',
       plateUser: '',
       plateNumbers: '',
+      timeUser: '',
+      timeNumbers: '',
+      kilometersUser: '',
       showAlert: false,
     };
   },
@@ -117,12 +121,56 @@ export default {
       }
     },
 
+    validateKilometers() {
+      // Converte a entrada em um número
+      const kilometers = parseFloat(this.kilometersUser);
+
+      // Verifica se a entrada não é um número válido ou se é menor ou igual a zero
+      if (isNaN(kilometers) || kilometers <= 0) {
+        // Verifica se o alerta já está sendo mostrado
+        if (!this.showAlert) {
+          // Define showAlert como true para indicar que o alerta está sendo mostrado
+          this.showAlert = true;
+          // Mostra o alerta
+          window.alert('Por favor, insira uma quantidade de quilômetros válida e maior que zero.');
+          // Limpa o valor do input
+          this.kilometersUser = '';
+          // Define showAlert como false após o alerta ser fechado
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 100);
+        }
+      }
+    },
+
     validateCpf() {
       if (this.cpfUser.length !== 14) {
         if (!this.showAlert) {
           this.showAlert = true;
           window.alert('Por favor, insira um CPF válido com 11 dígitos.');
           this.cpfUser = '';
+          setTimeout(() => {
+            this.showAlert = false;
+          }, 100);
+        }
+      }
+    },
+
+    validateHours() {
+      // Regex para validar o formato do horário (HH:MM)
+      const timeRegex = /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/;
+
+      // Verifica se o horário não corresponde ao formato HH:MM
+      if (!timeRegex.test(this.timeUser)) {
+        // Verifica se o alerta já está sendo mostrado
+        if (!this.showAlert) {
+          // Define showAlert como true para indicar que o alerta está sendo mostrado
+          this.showAlert = true;
+          // Mostra o alerta
+          window.alert('Por favor, insira o horário no formato HH:MM e dentro do intervalo correto.');
+          // Limpa o valor do input
+          this.timeUser = '';
+          // Define showAlert como false após o alerta ser fechado
           setTimeout(() => {
             this.showAlert = false;
           }, 100);

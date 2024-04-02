@@ -81,11 +81,6 @@ export default {
 
   methods: {
 
-    formatCep() {
-      this.cepUser = this.cepUser.replace(/\D/g, '').replace(/^(\d{5})(\d)/, '$1-$2');
-      this.cepNumbers = this.cepUser.replace(/\D/g, '');
-    },
-
     formatCpf() {
       this.cpfUser = this.cpfUser.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
       this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
