@@ -94,6 +94,9 @@ export default {
         },
 
         totalTravelsCount() {
+
+            this.totalTravels = 0;
+
             for (const vehicle of this.vehicleData) {
                 this.totalTravels += vehicle.count;
             }
