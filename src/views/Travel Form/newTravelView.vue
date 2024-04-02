@@ -8,20 +8,25 @@
 
               <div class="column">
                 <div class="input-box">
-                  <label>Selecionar Placa</label>
+                  <label>Selecionar Motorista</label>
                   <div class="select-box">
-                    <select required>
-                      <option hidden>Placas</option>
-                      <option>AHP-6969</option>
-                      <option>AHP-6969</option>
-                      <option>BWB5F69</option>
+                    <select required @change="handleSelectChangeDriver($event.target.value)">
+                      <option hidden>Motoristas</option>
+                      <option v-for="driver in drivers" :key="driver.cpf" :value="driver.name">{{ driver.name }}</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="input-box">
-                  <label>Digitar Placa</label>
-                  <input type="text" placeholder="Placa do Veículo" v-model="plateUser" @blur="validatePlate" maxlength="8" required>
+                  <label>Veiculos por Placas</label>
+                  <div class="select-box">
+                    <select required @change="handleSelectChangePlate($event.target.value)">
+                      <option hidden>Veiculos</option>
+                      <option v-for="vehicle in driverVeiculos" :key="vehicle.plate" :value="vehicle.plate">
+                        {{ vehicle.plate }}
+                      </option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -29,18 +34,16 @@
                 <div class="input-box">
                   <label>Selecionar Passageiro</label>
                   <div class="select-box">
-                    <select required>
-                      <option hidden>Passageiro</option>
-                      <option>Marcos Felipe</option>
-                      <option>Laise</option>
-                      <option>Alex Lobo</option>
+                    <select required @change="handleSelectChangePerson($event.target.value)">
+                      <option hidden>Passageiros</option>
+                      <option v-for="person in people" :key="person.cpf" :value="person.name">{{ person.name }}</option>
                     </select>
                   </div>
                 </div>
 
                 <div class="input-box">
                   <label>CPF Passageiro</label>
-                  <input type="text" placeholder="CPF do Passageiro" required v-model="cpfUser" @input="formatCpf" @blur="validateCpf" onkeypress="return event.charCode >= 48 && event.charCode <= 57" maxlength="14">
+                  <input type="text" placeholder="CPF" v-model="cpfNumbers" readonly>
                 </div>
               </div>
               
@@ -57,18 +60,11 @@
                 </div>
               </div>
 
-              <div class="column">
                 <div class="input-box">
                   <label>Quantidade de KMs</label>
                   <input type="number" placeholder="Quantidade de KMs Rodados " v-model="kilometersUser" @blur="validateKilometers" required>
                   
                 </div>
-
-                <div class="input-box">
-                  <label>Valor Cobrado</label>
-                  <input type="number" class="input-date" placeholder="Valor Padrão R$ 0.40">
-                </div>
-              </div>
 
               <button class="form-send">Salvar</button>
             </form>
@@ -80,6 +76,7 @@
 
 <script>
 import HomeView from '../Home/HomeView.vue';
+import axios from 'axios'
 
 export default {
   name: 'newUserForm',
@@ -94,13 +91,92 @@ export default {
       timeNumbers: '',
       kilometersUser: '',
       showAlert: false,
+      people: [],
+      drivers: [],
+      driverCPF: '',
+      driverVeiculos: [],
     };
   },
 
+  mounted() {
+    this.token = this.getTokenFromLocalStorage();
+    this.getPeople();
+    this.getDrivers();
+  },
+
   methods: {
+
+    handleSelectChangePerson(selectedName) {
+        // Encontrar o CPF correspondente ao nome selecionado
+        const selectedPerson = this.people.find(person => person.name === selectedName);
+        if (selectedPerson) {
+            this.cpfNumbers = selectedPerson.cpf;
+        }
+    },
+
+    handleSelectChangeDriver(selectedName) {
+          // Encontrar o CPF correspondente ao nome selecionado
+          const selectedDriver = this.drivers.find(driver => driver.name === selectedName);
+          if (selectedDriver) {
+              this.driverCPF = selectedDriver.cpf;
+              this.getVehicles(this.driverCPF);
+          }
+      },
+
+      handleSelectChangePlate(selectedPlate) {
+        // Definir a placa selecionada como plateNumbers
+        this.plateNumbers = selectedPlate;
+      },
+
+    getPeople() {
+      axios.get('https://destinocerto.azurewebsites.net/api/Person/passengers', {
+        headers: {
+          Authorization: `Bearer ${this.token}`,
+        },
+      })
+      .then(response => {
+        this.people = response.data; // Armazena as pessoas que não são motoristas na variável people
+      })
+      .catch(error => {
+        console.error('Erro ao obter a lista de pessoas:', error);
+      });
+    },
+
+    getDrivers() {
+        axios.get('https://destinocerto.azurewebsites.net/api/Person/drivers', {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then(response => {
+          this.drivers = response.data; // Armazena os motoristas na variável drivers
+        })
+        .catch(error => {
+          console.error('Erro ao obter a lista de motoristas:', error);
+        });
+      },
+
+      getVehicles(driverCpf) {
+        axios.get(`https://destinocerto.azurewebsites.net/api/Vehicle?driverCpf=${driverCpf}`, {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          },
+        })
+        .then(response => {
+          this.driverVeiculos = response.data; // Armazena os veículos do motorista na variável driverVeiculos
+        })
+        .catch(error => {
+          console.error('Erro ao obter a lista de veículos do motorista:', error);
+        });
+      },
+
     formatCpf() {
       this.cpfUser = this.cpfUser.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
       this.cpfNumbers = this.cpfUser.replace(/\D/g, '');
+    },
+
+    getTokenFromLocalStorage() {
+        return localStorage.getItem('token');
     },
 
     validatePlate() {
